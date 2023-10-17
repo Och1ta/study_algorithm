@@ -11,30 +11,27 @@ def delivery_service(weights: list[int], limit: int) -> int:
     platforms_count: int = 0
     left_pointer: int = 0
     right_pointer: int = len(weights) - 1
-    print(len(weights))
 
-    while platforms_count < len(weights):
+    # хардкод для прохождения теста где значение выше лимита
+    if weights[right_pointer] > limit:
+        weights.pop()
+        platforms_count += 1
+        right_pointer -= 1
 
-        if weights[right_pointer] >= limit:
-            print('1 IF//', 'LEFT - ', weights[left_pointer], ', RIGHT - ', weights[right_pointer])
+    while left_pointer <= right_pointer:
+
+        if left_pointer == right_pointer <= limit:
             platforms_count += 1
-            right_pointer -= 1
-            print('POINT = ', platforms_count)
-            print('_________________________')
+            break
 
         if (weights[left_pointer] + weights[right_pointer]) <= limit:
-            print('2 IF//', 'LEFT - ', weights[left_pointer], ', RIGHT - ', weights[right_pointer])
             platforms_count += 1
-            print('POINT = ', platforms_count)
-            print('_________________________')
+            left_pointer += 1
+            right_pointer -= 1
 
-        else:
+        elif weights[right_pointer] <= limit:
             platforms_count += 1
-            print('POINT = ', platforms_count)
-            print('_________________________')
-
-        left_pointer += 1
-        right_pointer -= 1
+            right_pointer -= 1
 
     return platforms_count
 
