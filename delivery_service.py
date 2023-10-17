@@ -11,26 +11,25 @@ def delivery_service(weights: list[int], limit: int) -> int:
     platforms_count: int = 0
     left_pointer: int = 0
     right_pointer: int = len(weights) - 1
-    print(weights)
+    print(len(weights))
 
-    while left_pointer <= right_pointer:
+    while platforms_count < len(weights):
 
         if weights[right_pointer] >= limit:
+            print('1 IF//', 'LEFT - ', weights[left_pointer], ', RIGHT - ', weights[right_pointer])
             platforms_count += 1
             right_pointer -= 1
-            print('1 IF//', 'LEFT - ', weights[left_pointer], ', RIGHT - ', weights[right_pointer])
             print('POINT = ', platforms_count)
             print('_________________________')
 
         if (weights[left_pointer] + weights[right_pointer]) <= limit:
-            platforms_count += 1
             print('2 IF//', 'LEFT - ', weights[left_pointer], ', RIGHT - ', weights[right_pointer])
+            platforms_count += 1
             print('POINT = ', platforms_count)
             print('_________________________')
 
         else:
             platforms_count += 1
-            print('ELSE//', 'LEFT - ', weights[left_pointer], ', RIGHT - ', weights[right_pointer])
             print('POINT = ', platforms_count)
             print('_________________________')
 
