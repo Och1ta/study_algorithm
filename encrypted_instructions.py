@@ -1,3 +1,7 @@
+LEFT_POINTER: str = "["
+RIGHT_POINTER: str = "]"
+
+
 def encrypted_instructions(encoded_command: str) -> str:
     """
     input
@@ -8,30 +12,37 @@ def encrypted_instructions(encoded_command: str) -> str:
     output
     Полная форма команды. Например, aaabcbc.
     """
-    LEFT_POINTER: str = "["
-    RIGHT_POINTER: str = "]"
-    data_calculations: tuple[list, list] = ([], [])
-    temp_variable: str = ""
-    temp_result: str = ""
+    data_calculations: list[tuple[str, int]] = []
+    temp_variable: str = ''
+    temp_result: int = 0
 
     for symbol in encoded_command:
+        if symbol == LEFT_POINTER:
+            # Ищем открывающую скобку '['
+            # Сохраняем число и символ в хранилище
+            data_calculations.append((temp_variable, temp_result))
 
-        if symbol.isdigit():
-            temp_variable += symbol
+            # чистим temp_variable для нового символа в [ ]
+            temp_variable = ''
 
-        elif symbol == LEFT_POINTER:
-            data_calculations[1].append(int(temp_variable))
-            data_calculations[0].append(temp_result)
-            temp_variable: str = ""
-            temp_result: str = ""
+            # чистим temp_result для нового числа в [ ]
+            temp_result = 0
 
         elif symbol == RIGHT_POINTER:
-            temp_result: str = data_calculations[0].pop() + data_calculations[1].pop() * temp_result
+            # Ищем закрывающую скобку ']'
+            # Записываем крайнее число и символ из хранилища
+            early_variable, earle_result = data_calculations.pop()
+            temp_variable = early_variable + temp_variable * earle_result
+
+        elif symbol.isdigit():
+            # Обновляем текущее число
+            temp_result = temp_result * 10 + int(symbol)
 
         else:
-            temp_result += symbol
+            # Обновляем текущий символ
+            temp_variable += symbol
 
-    return temp_result
+    return temp_variable
 
 
 if __name__ == '__main__':
